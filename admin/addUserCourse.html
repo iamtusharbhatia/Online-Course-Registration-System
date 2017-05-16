@@ -1,0 +1,191 @@
+<html lang="en">
+<head>
+  <title>Course Registration</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.13/css/jquery.dataTables.min.css">
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/select/1.2.1/css/select.dataTables.min.css">
+	
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>	
+  <script src="//code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>  
+  <script src="https://cdn.datatables.net/select/1.2.1/js/dataTables.select.min.js"></script>
+  <style>
+    /* Set height of the grid so .sidenav can be 100% (adjust if needed) */
+    .row.content {height: 600px}
+
+    /* Set gray background color and 100% height */
+    .sidenav {
+      background-color: #f1f1f1;
+      height: 100%;
+    }
+
+    /* Set black background color, white text and some padding */
+     footer {
+      background-color: #555;
+      color: white;	  
+	  position: relative;
+	  right: 0;
+	  bottom: 0;
+	  left: 0;
+	  padding: 1rem;
+	  text-align: center;
+    }
+
+    /* On small screens, set height to 'auto' for sidenav and grid */
+    @media screen and (max-width: 767px) {
+      .sidenav {
+        height: auto;
+        padding: 15px;
+      }
+      .row.content {height: auto;}
+    }
+  </style>
+</head>
+<body bgcolor="#c1bdba">
+
+<div class="container-fluid">
+  <div class="row content">
+    <div class="col-sm-3 sidenav">
+      <h2>UT Dallas Course Registration--ADMIN</h2>
+      <ul class="nav nav-pills nav-stacked">
+	   <li><a href="welcomeAdmin.html">Home</a></li>
+        <li><a href="AddCourses.html">Add Course</a></li>
+		<li><a href="DeleteCourses.html">Remove Course</a></li>
+		<li class="active"><a href="addUserCourse.html">Add User Course</a></li>
+		<li><a href="dropUserCourse.html">Drop User Course</a></li>
+		<li><a href="logout.php">Logout</a></li>
+      </ul><br>
+    </div>
+
+    <div class="col-sm-9" style="background-color:white">
+	<br>
+	<br>
+	<div class='container' style='width:100%;'>
+	
+		<div class="field-wrap">
+			<label>
+              Department:<span class="req"></span>
+            </label>
+            <input id="department" list="departments" required autocomplete="off" name="department">
+			<datalist id="departments">
+			<option value="All">All Departments</option>
+			<option value="CS">CS-Computer Science</option>
+			<option value="CE">SE-Computer Engineering</option>
+			<option value="ACCI">ACCI-Accounting</option>
+			<option value="AHSI">AHSI-Art History</option>
+			<option value="BIOL">BIOL-Biology</option>
+			<option value="BUAN">BUAN-Business Analytics</option>
+			<option value="ITM">ITM-IT Management</option>
+			</datalist>
+					
+			<label>
+                   Net Id:<span class="req"></span>
+            </label>
+			<input type ="text" id="netId">
+		</div>
+		<br>
+		<br>
+		<table id='theTable' class='display' style='width:100%;'>
+			<thead>
+			  <tr>
+				<th class='col-6'>Course Id</th>
+				<th class='col-6'>Course Number</th>
+				<th class='col-6'>Section Number</th>
+				<th class='col-6'>Course Name</th>
+				<th class='col-6'>Description</th>
+				<th class='col-6'>Department Name</th>
+			  </tr>
+			</thead>
+		</table>
+		<br>
+		<br>
+		<button type="button" onclick="return registerClicked()">Register</button>
+		
+	</div>	
+	 <br><br>
+    </div>
+  </div>
+</div>
+
+
+<footer class="container-fluid">
+  <p>Copyrights@Utdallas</p>
+</footer>
+
+<script type="text/javascript">
+
+$( document ).ready(function() {
+	
+	 $('#department').change(function(){
+	 
+		$('#theTable').dataTable({
+		"ajax": {
+			url: 'fetchAddUserCourse.php',
+			data: { param1: $(this).val()},
+			type: "GET",
+			context: document.body
+		},
+		select: true,
+		destroy: true,
+		"columns": [
+			{"data": "id"},
+			{"data": "cnum"},
+			{"data": "snum"},
+			{"data": "cname"},
+			{"data": "descr"},
+			{"data": "dname"}
+		],
+	  });
+	})
+	
+	table = $('#theTable').dataTable({
+	"ajax": {
+		url: 'fetchAddUserCourse.php',
+    	data: { param1: ""},
+		type: "GET",
+		context: document.body
+	},
+	select: true,
+	destroy: true,
+		"columns": [
+			{"data": "id"},
+			{"data": "cnum"},
+			{"data": "snum"},
+			{"data": "cname"},
+			{"data": "descr"},
+			{"data": "dname"}
+		],
+    });
+	
+	$('#theTable tbody').on( 'click', 'tr', function () {
+		clickedId = $(this).find("td").eq(0).text();
+	});
+});
+
+function registerClicked() {
+	
+	console.log($(netId).val())
+	console.log(clickedId);
+	$.post("addUserCourse.php",
+      {
+        "c_id" : clickedId,
+        "netId" : $(netId).val()
+      },
+		function(result){
+		
+		  if($.trim(result) == "success"){
+			alert("Course registered!");
+		  } else {
+			alert("Failed!");
+		  }
+  		  document.location="addUserCourse.html";
+      });		
+}
+
+</script>
+
+</body>
+</html>
