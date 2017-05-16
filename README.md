@@ -21,3 +21,4 @@ Remove courses from the catalog <br/>
 Register courses for a particular user <br/>
 Drop courses for a particular user
 
+### Technologies Used: PhP, Jquery, Ajax, Html, CSS, Bootstrap, Mysql, MAMP
