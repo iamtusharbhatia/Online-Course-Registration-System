@@ -5,12 +5,14 @@ This project aimed at creating an Online Course Registration System which could 
 The system provides a real-time, complete platform for online course enrollment at a University.  <br/>
 There are two types of users for this system admin and students. Based on their user role stored in the database, users can access their respective resources.  <br/>
 
-#### Students Priviledges :
-View completed as well as currently enrolled courses <br/>
+#### Student Priviledges :
+View currently enrolled courses <br/>
+View courses taken in the past <br/>
 Add courses to Cart <br/>
+Delete courses from Cart <br/>
 Register Courses <br/>
 Drop Courses <br/>
-Check status of courses dropped by the admin
+View course schedule for the current semester
 
 #### Admin Priviledges :
 View all courses offered by the University <br/>
