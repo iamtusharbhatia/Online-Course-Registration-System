@@ -7,16 +7,16 @@ There are two typer of users of the system admin and students. Based on their us
 A new student can register by giving details in the registration form. 
 
 ### Students Priviledges :
-View completed as well as currently enrolled courses
-Add courses to Cart
-Register Courses
-Drop Courses
+View completed as well as currently enrolled courses <br/>
+Add courses to Cart <br/>
+Register Courses <br/>
+Drop Courses <br/>
 Check status of courses dropped by the admin
 
 ### Admin Priviledges :
-View all courses offered by the University
-Add new courses to the catalog
-Remove courses from the catalog
-Register courses for a particular user
+View all courses offered by the University <br/>
+Add new courses to the catalog <br/>
+Remove courses from the catalog <br/>
+Register courses for a particular user <br/>
 Drop courses for a particular user
 
